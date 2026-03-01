@@ -20,6 +20,7 @@ Os guias são escritos com base em experiência real e vão sendo atualizados e 
 | Guia | Descrição |
 |------|-----------|
 | [Setup ao NextDNS](./Setup%20ao%20NextDNS.md) | Como configurar o NextDNS no Linux via systemd-resolved |
+| [Configurar Discos Secundários](./Como%20Configurar%20Discos%20Secundários%20—%20Fedora%20Linux.md) | Como montar discos internos de forma permanente via fstab (BTRFS/EXT4/ExFAT) |
 
 ## Contribuições / Contributions
 
