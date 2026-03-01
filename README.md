@@ -27,6 +27,10 @@ Os guias são escritos com base em experiência real e vão sendo atualizados e 
 
 **EN:** Contributions are welcome! If you find any errors, want to translate to other languages or add new guides, feel free to do so.
 
+**FR:** Les contributions sont bienvenues ! Si vous trouvez des erreurs, voulez traduire dans d'autres langues ou ajouter de nouveaux guides, n'hésitez pas à le faire.
+
+**ES:** ¡Las contribuciones son bienvenidas! Si encuentras algún error, deseas traducir a otros idiomas o añadir nuevas guías, no dudes en hacerlo.
+
 ## 📄 Licença
 
 Este projeto está licenciado sob [CC0-1.0](./LICENSE) — domínio público, sem restrições.
