@@ -1,2 +1,32 @@
-# Guias-Linux-PT
-Guias em PT-PT para algumas Distros Linux que uso/usei, o objetivo é ajudar utilizadores de Lingua Portuguesa a terem acesso a tutoriais em como fazer certas ações no Linux. A medida que vou explorando o Linux vou também atualizando os guias e adicionando novos! 
+# Guias Linux PT
+
+> Guias em PT-PT para ajudar utilizadores de língua portuguesa a explorar e configurar o Linux.
+
+## Sobre o Projeto
+
+Este repositório contém guias práticos em Português de Portugal para várias distribuições Linux. O objetivo é colmatar a falta de documentação de qualidade em PT-PT e tornar o Linux mais acessível à comunidade portuguesa.
+
+Os guias são escritos com base em experiência real e vão sendo atualizados e expandidos ao longo do tempo.
+
+## Objetivos
+
+- Criar documentação de qualidade em PT-PT
+- Ajudar novos utilizadores a migrar para Linux
+- Partilhar conhecimento com a comunidade lusófona
+- Contribuir para o crescimento do Linux em Portugal
+
+## 📚 Guias Disponíveis
+
+| Guia | Descrição |
+|------|-----------|
+| [Setup ao NextDNS](./Setup%20ao%20NextDNS.md) | Como configurar o NextDNS no Linux via systemd-resolved |
+
+## Contribuições / Contributions
+
+**PT-PT:** Contribuições são bem-vindas! Se encontrares erros, quiseres traduzir para outras línguas ou adicionar novos guias, estás à vontade.
+
+**EN:** Contributions are welcome! If you find any errors, want to translate to other languages or add new guides, feel free to do so.
+
+## 📄 Licença
+
+Este projeto está licenciado sob [CC0-1.0](./LICENSE) — domínio público, sem restrições.
