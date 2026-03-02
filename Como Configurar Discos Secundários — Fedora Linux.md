@@ -208,23 +208,22 @@ Gravar com `CTRL + O` → `Enter` → `CTRL + X`
 
 ## 5. Testar e Validar
 
-Reiniciar com um `fstab` com erros pode resultar num sistema que não arranca (kernel panic ou modo de emergência). Por isso, **nunca reinicies sem testar primeiro**. Este passo permite verificar se tudo está correto enquanto ainda tens o sistema funcional para corrigir erros.
-
-### Validar a sintaxe do fstab
-
-```bash
-sudo findmnt --verify
-```
-
-Este comando analisa o `fstab` e reporta erros de sintaxe, UUIDs inválidos e opções mal formadas — sem montar nada. Se devolver warnings ou erros, volta ao passo 4 e corrige antes de continuar.
+Reiniciar com um `fstab` com erros pode resultar num sistema que não arranca (kernel panic ou modo de emergência). Por isso, **nunca reinicies sem testar primeiro**. Estes passos abaixo permitem verificar se tudo está correto enquanto ainda tens o sistema funcional para corrigir erros.
 
 ### Recarregar o systemd
 
 ```bash
 sudo systemctl daemon-reload
 ```
-
 O systemd gera unidades de montagem (`.mount`) a partir do `fstab`. Este comando força o systemd a reler o ficheiro e atualizar as unidades internas. Sem isto, o systemd pode continuar a usar a versão antiga em cache.
+
+### Validar a sintaxe do fstab
+
+```bash
+sudo findmnt --verify
+```
+Este comando analisa o `fstab` e reporta erros de sintaxe, UUIDs inválidos e opções mal formadas — sem montar nada. Se devolver warnings ou erros, volta ao passo 4 e corrige antes de continuar.
+
 
 ### Montar tudo
 
