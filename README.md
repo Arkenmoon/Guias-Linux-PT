@@ -4,7 +4,7 @@
 
 ## Sobre o Projeto
 
-Este repositório contém guias práticos em Português de Portugal para várias distribuições Linux. O objetivo é colmatar a falta de documentação de qualidade em PT-PT e tornar o Linux mais acessível à comunidade portuguesa.
+Este repositório contém guias práticos em Português de Portugal para várias distribuições Linux. O objetivo é colmatar a falta de documentação de qualidade em Português de Portugal e tornar o Linux mais acessível à comunidade portuguesa fazendo um compêndio de toda a informação que for possível localizar para PT-PT.
 
 Os guias são escritos com base em experiência real e vão sendo atualizados e expandidos ao longo do tempo.
 
@@ -21,6 +21,14 @@ Os guias são escritos com base em experiência real e vão sendo atualizados e 
 |------|-----------|
 | [Setup ao NextDNS](./Setup%20ao%20NextDNS.md) | Como configurar o NextDNS no Linux via systemd-resolved |
 | [Configurar Discos Secundários](./Como%20Configurar%20Discos%20Secundários%20—%20Fedora%20Linux.md) | Como montar discos internos de forma permanente via fstab (BTRFS/EXT4/ExFAT) |
+
+## 🇵🇹 Comunidade Linux PT-PT
+
+Outros projetos da comunidade Linux em Português de Portugal:
+
+| Projeto | Autor | Descrição |
+|---------|-------|-----------|
+| [Guia CachyOS PT-PT](https://github.com/DarKouto/guia-instalacao-linux-pt-pt) | DarKouto | Guia completo de instalação e configuração do CachyOS em PT-PT |
 
 ## Contribuições / Contributions
 
