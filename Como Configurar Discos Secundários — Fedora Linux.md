@@ -248,32 +248,6 @@ df -h | grep /mnt/
 
 ---
 
-## 6. Impedir Montagem Automática pelo Gestor de Ficheiros
-
-Mesmo com os discos configurados no `fstab`, o `udisks2` (o serviço que o Dolphin, Nautilus e outros gestores de ficheiros usam para montar discos) pode tentar montá-los outra vez em `/run/media/`. Isto resulta em discos montados em dois sítios ao mesmo tempo.
-
-A solução é criar regras `udev` que dizem ao `udisks2` para ignorar estes discos completamente. Substitui cada UUID pelo UUID real:
-
-```bash
-sudo bash -c 'cat >> /etc/udev/rules.d/99-ignorar-discos.rules << EOF
-# Impedir automount dos discos internos pelo gestor de ficheiros
-ENV{ID_FS_UUID}=="uuid-do-disco-1", ENV{UDISKS_IGNORE}="1"
-ENV{ID_FS_UUID}=="uuid-do-disco-2", ENV{UDISKS_IGNORE}="1"
-ENV{ID_FS_UUID}=="uuid-do-disco-3", ENV{UDISKS_IGNORE}="1"
-EOF'
-```
-
-Recarregar as regras:
-
-```bash
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-```
-
-Os discos continuam acessíveis em `/mnt/`. Apenas deixam de aparecer como "dispositivos removíveis" na barra lateral do gestor de ficheiros. Podes adicionar bookmarks para os diretórios em `/mnt/` se quiseres acesso rápido.
-
----
-
 ## Resolução de Problemas
 
 | Problema | Causa Provável | Solução |
