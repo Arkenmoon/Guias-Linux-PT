@@ -121,9 +121,15 @@ systemctl reboot
 
 ### Passo 6 — Reativar os Serviços
 
+Caso queiras que a VPN comece assim logo que o PC inicie sessão:
 ```bash
 sudo systemctl enable --now mullvad-daemon
 sudo systemctl enable --now mullvad-early-boot-blocking
+```
+
+Se não quiser que inicie logo quando iniciar sessão basta:
+```bash
+sudo systemctl enable --now mullvad-daemon
 ```
 
 ### Passo 7 — (Opcional) Reconfigurar DNS Personalizado
@@ -184,4 +190,4 @@ mullvad dns get
 
 ---
 
-*Última atualização: Março 2026*
+*Última atualização: 03 de Março 2026*
