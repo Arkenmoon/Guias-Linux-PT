@@ -1,6 +1,8 @@
-# Guias Linux PT
-
+# Guias Linux PT 
 > Guias em PT-PT para ajudar utilizadores de língua portuguesa a explorar e configurar o Linux.
+>
+
+[![Em manutenção](https://img.shields.io/badge/Em_Desenvolvimento-Sim-Green?style=plastic)](https://github.com/Arkenmoon/Guias-Linux-PT/graphs/commit-activity)
 
 ## Sobre o Projeto
 
@@ -22,6 +24,7 @@ Os guias são escritos com base em experiência real e vão sendo atualizados e 
 | [Setup ao NextDNS](./Setup%20ao%20NextDNS.md) | Como configurar o NextDNS no Linux via systemd-resolved |
 | [Configurar Discos Secundários](./Como%20Configurar%20Discos%20Secundários%20—%20Fedora%20Linux.md) | Como montar discos internos de forma permanente via fstab (BTRFS/EXT4/ExFAT) |
 | [Mullvad VPN: Bazzite](Mullvad%20VPN%20%E2%80%94%20Bazzite.md) | Como instalar, configurar e atualizar o Mullvad VPN no Bazzite e outras distros baseadas em Fedora Atomic via rpm-ostree |
+
 ## 🇵🇹 Comunidade Linux PT-PT
 
 Outros projetos da comunidade Linux em Português de Portugal:
@@ -35,10 +38,6 @@ Outros projetos da comunidade Linux em Português de Portugal:
 **PT-PT:** Contribuições são bem-vindas! Se encontrares erros, quiseres traduzir para outras línguas ou adicionar novos guias, estás à vontade.
 
 **EN:** Contributions are welcome! If you find any errors, want to translate to other languages or add new guides, feel free to do so.
-
-**FR:** Les contributions sont bienvenues ! Si vous trouvez des erreurs, voulez traduire dans d'autres langues ou ajouter de nouveaux guides, n'hésitez pas à le faire.
-
-**ES:** ¡Las contribuciones son bienvenidas! Si encuentras algún error, deseas traducir a otros idiomas o añadir nuevas guías, no dudes en hacerlo.
 
 ## 📄 Licença
 
