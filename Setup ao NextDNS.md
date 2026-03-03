@@ -32,9 +32,9 @@ sudo systemctl restart systemd-resolved
 ```bash
 resolvectl status
 ```
-> ✅ Deverás ver **"DNS over TLS"** com o estado **"yes"** e os teus servidores NextDNS listados
+> Deverás ver **"DNS over TLS"** com o estado **"yes"** e os teus servidores NextDNS listados
 
-### 6. ⚠️ Atenção para sistemas imutáveis/Atomic
+### 6. Atenção para sistemas imutáveis/Atomic
 Sistemas como **Bazzite**, **Fedora Kinoite** e **Fedora Silverblue** podem fazer reset desta configuração em atualizações grandes (ex: Bazzite 43 → 44, Fedora Kinoite 43 → 44). Confirmar sempre com `resolvectl status` após cada atualização maior.
 
 ---
@@ -46,3 +46,5 @@ Sistemas como **Bazzite**, **Fedora Kinoite** e **Fedora Silverblue** podem faze
 | **Testado em** | Fedora KDE, Bazzite, Fedora Kinoite |
 | **Compatível com** | Qualquer distro que use systemd-resolved |
 | **NÃO compatível** | Arch Linux e derivados (CachyOS — preferível usar o CachyOS Hello que tem opção para configurar DNS), EndeavourOS, Void Linux, Alpine Linux — estas distros requerem configuração diferente |
+
+*Última atualização: 03 de Março 2026*
