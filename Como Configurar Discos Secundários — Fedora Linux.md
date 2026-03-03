@@ -3,7 +3,7 @@
 Guia completo para montar discos internos de forma permanente no Fedora (KDE/Dolphin). Compatível com BTRFS, EXT4 e ExFAT.
 
 ---
-
+Última atualização: 03 de Março 2026
 ## Pré-Requisitos
 
 - Fedora Linux (qualquer versão recente com systemd)
@@ -60,7 +60,7 @@ sudo umount /run/media/$USER/NomeDoDisco2
 sudo umount /run/media/$USER/NomeDoDisco3
 ```
 
-> ✅ Se receberes `not mounted` ou `no mount point`, significa que o disco já está livre — não é um erro.
+> Se receberes `not mounted` ou `no mount point`, significa que o disco já está livre — não é um erro.
 
 Para confirmar que nada ficou pendurado:
 
@@ -244,7 +244,7 @@ O flag `-a` monta todas as entradas do `fstab` que ainda não estão montadas �
 df -h | grep /mnt/
 ```
 
-> ✅ Deverás ver uma linha por cada disco, com o tamanho, espaço usado e ponto de montagem. Se todos aparecem — está feito.
+> Deverás ver uma linha por cada disco, com o tamanho, espaço usado e ponto de montagem. Se todos aparecem — está feito.
 
 ---
 
@@ -268,3 +268,5 @@ df -h | grep /mnt/
 - Para verificar a saúde de discos BTRFS: `sudo btrfs filesystem show`
 - Para verificar a saúde de discos EXT4: `sudo e2fsck -n /dev/sdXN` (apenas com o disco desmontado)
 - Para verificar a saúde de discos com SMART: `sudo smartctl -a /dev/sdX` (requer o pacote `smartmontools`)
+
+Última atualização: 03 de Março 2026
