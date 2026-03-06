@@ -14,7 +14,7 @@
    - 3.2 [Firmware do hardware](#32-firmware-do-hardware)
    - 3.3 [RPM Fusion — Repositórios Adicionais](#33-rpm-fusion--repositórios-adicionais)
    - 3.4 [Codecs Multimédia](#34-codecs-multimédia)
-   - 3.5 [Firefox e codecs de vídeo](#35-firefox-e-codecs-de-vídeo)
+   - 3.5 [Browsers — Firefox e Google Chrome](#35-browsers--firefox-e-google-chrome)
    - 3.6 [Flatpak e Flathub](#36-flatpak-e-flathub)
    - 3.7 [Drivers AMD e NVIDIA](#37-drivers-amd-e-nvidia)
    - 3.8 [Suporte a arquivos comprimidos](#38-suporte-a-arquivos-comprimidos)
@@ -33,7 +33,8 @@
    - 9.4 [Anti-Cheat e Compatibilidade](#94-anti-cheat-e-compatibilidade)
 10. [Personalização do KDE](#10-personalização-do-kde)
 11. [Otimizações e Manutenção](#11-otimizações-e-manutenção)
-12. [Notas Finais](#12-notas-finais)
+12. [Resolução de Problemas Comuns](#12-resolução-de-problemas-comuns)
+13. [Notas Finais](#13-notas-finais)
 
 ---
 
@@ -65,7 +66,7 @@ Pessoalmente, a combinação Fedora + KDE Plasma é mais sólida, moderna e pers
 - **Vê no manual da tua Motherboard como aceder à BIOS**, porque vais precisar de lá ir para alterar duas condições de arranque.
 - **Fica a carregar na tecla DEL ou DELETE**, isto permite aceder à BIOS no teu computador.
 - **Dentro da BIOS mete modo avançado**, isto permite veres as opções necessárias para certificar que o teu sistema arranca sem problemas.
-- **Desativa o Secure Boot** (consulta o manual da tua Motherboard para veres onde, normalmente é em **BOOT**) muitas distribuições Linux não gostam de Secure Boot e podem dar conflitos no login, portanto recomendo sempre desativá-lo. 
+- **Secure Boot** — o Fedora suporta Secure Boot nativamente e funciona sem problemas. No entanto, se tens uma **NVIDIA** e vais instalar drivers proprietários, recomendo desativá-lo (consulta o manual da tua Motherboard para veres onde, normalmente é em **BOOT**) para evitar conflitos com o módulo kernel da NVIDIA. Se tens **AMD** ou **Intel**, podes deixar ativo sem stress.
 - **Desativa o Fast Boot** (deverá ser no mesmo local onde desativas o **Secure Boot**) apesar de ser bastante útil no Windows, no Linux pode causar problemas e fazer com que a informação do teu hardware não carregue corretamente.
 
 ### 2.3 Durante a instalação
@@ -76,6 +77,7 @@ Pessoalmente, a combinação Fedora + KDE Plasma é mais sólida, moderna e pers
 - Aconselho a não **Cifrar os Dados (Encrypt Data)**. Cifrar dados reduz a performance do Fedora e não é necessário a não ser em modo corporativo. Também não é necessário selecionar a opção **Root** pois já és o administrador principal da conta.
 - O Fedora usa o sistema **Btrfs** por padrão como sistema de ficheiros, é uma boa escolha até para fazer imagens de segurança do sistema através do Snapper (explicado na [secção 5](#5-snapshots-com-btrfs)). Na minha opinião, não compensa mudar para EXT4 ou outro sistema atualmente.
 - Se fizeres dual boot com Windows, instala **sempre o Windows primeiro** e depois a distribuição Linux, é muito mais fácil assim de gerir e evita conflitos. O Windows tem tendência nos updates a roubar o login só para ele, é um problema mesmo da Microsoft.
+- Se estás a fazer dual boot, prepara-te para o relógio ficar trocado entre sistemas. Isto é normal e tem fix fácil — está explicado na [secção 10 - Personalização do KDE](#dual-boot--fix-do-relógio).
 - O menu do Fedora é muito intuitivo como disse **mas recomendo sempre ler bem tudo o que é pedido ao utilizador com calma**, assim fica sempre tudo ao teu gosto.
 - Depois da instalação estar pronta, basta iniciares (sem pen USB claro) e estarás no ambiente de trabalho do Fedora KDE limpo e pronto a começar.
 
@@ -147,7 +149,7 @@ sudo dnf groupupdate multimedia --setopt="install_weak_deps=False" --exclude=Pac
 sudo dnf groupupdate sound-and-video -y
 ```
 
-Para suporte adicional a formatos da Intel e compatibilidade com hardware de vídeo:
+Para suporte adicional a formatos da **Intel** (apenas se tens gráficos integrados ou dedicados Intel, **não corras isto em AMD ou NVIDIA**):
 
 ```bash
 sudo dnf install intel-media-driver -y
@@ -158,7 +160,9 @@ sudo dnf install intel-media-driver -y
 > sudo dnf install mesa-va-drivers-freeworld mesa-vdpau-drivers-freeworld -y
 > ```
 
-### 3.5 Firefox e codecs de vídeo
+### 3.5 Browsers: Firefox ou Google Chrome
+
+#### Firefox e codecs de vídeo
 
 Caso uses Firefox, o mesmo no Fedora precisa de ajuda extra para reproduzir certos vídeos H.264 em sites como o Twitter/Facebook entre outros. Isto resolve-se com o codec OpenH264 da Cisco:
 
@@ -169,6 +173,17 @@ sudo dnf update -y
 ```
 
 Depois de instalar, reinicia o Firefox e verifica que o plugin **OpenH264** está ativo em `about:addons` na secção de Plugins.
+
+#### Google Chrome
+
+Se preferes o Chrome (que é o browser com melhor compatibilidade web, segurança e sincronização completa com a tua conta Google), podes instalá-lo diretamente via .rpm. Não há nada de errado em usar Chrome no Linux, funciona nativamente sem problemas e é mantido pela Google. 
+Instala diretamente sem precisar de ir ao site:
+
+```bash
+sudo dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y
+```
+
+Isto adiciona automaticamente o repositório da Google ao teu sistema. As atualizações futuras vêm com o `sudo dnf upgrade` normal, zero manutenção.
 
 ### 3.6 Flatpak e Flathub
 
@@ -199,7 +214,7 @@ Se fores pelo **Discover**, no canto superior direito da aplicação, mesmo ao l
 
 > Para a maioria das aplicações do dia-a-dia (browsers, clientes de Discord, gestores de password, etc.), Flatpak é a forma recomendada de instalar no Fedora para iniciantes. Caso a aplicação não esteja disponível no Flathub, aí sim compensa procurar nativamente pela mesma (ficheiro .RPM).
 
-#### Flatseal — Gerir permissões de Flatpaks
+#### Flatseal - Gerir permissões de Flatpaks
 
 As aplicações Flatpak correm em sandbox (isoladas), o que significa que por omissão podem não ter acesso a certas pastas do sistema. Se uma aplicação não consegue aceder aos teus ficheiros ou discos secundários o **Flatseal** permite gerir essas permissões de forma visual:
 
@@ -527,6 +542,35 @@ Se precisas de funcionalidades avançadas de remapeamento, o [**Input Remapper**
 flatpak install flathub io.github.sezanzeb.input_remapper
 ```
 
+### DACs e áudio USB externo
+
+Se tens um DAC externo USB (como por exemplo Schiit Fulla, FiiO, Topping, etc.), a boa notícia é que a maioria funciona plug and play no Linux. O Fedora usa **PipeWire** como servidor de áudio por omissão que suporta dispositivos USB Audio Class 2 (UAC2) nativamente sem drivers adicionais.
+
+Basta ligar o DAC via USB e selecionar o dispositivo de saída no ícone de volume no system tray do KDE. Se tiveres também um microfone USB separado (como um HyperX SoloCast ou similar), o PipeWire deteta ambos independentemente — seleciona o DAC como output e o microfone como input nas definições de áudio.
+
+Se por algum motivo tiveres problemas de crackling ou pops de áudio (raro mas pode acontecer), cria o seguinte ficheiro de configuração:
+
+```bash
+mkdir -p ~/.config/pipewire/pipewire.conf.d/
+nano ~/.config/pipewire/pipewire.conf.d/10-fix-crackling.conf
+```
+
+Com o seguinte conteúdo:
+
+```ini
+context.properties = {
+    default.clock.quantum = 1024
+    default.clock.min-quantum = 512
+    default.clock.max-quantum = 2048
+}
+```
+
+Reinicia o PipeWire para aplicar:
+
+```bash
+systemctl --user restart pipewire
+```
+
 ---
 
 ## 9. Gaming no Linux (Importante se jogas)
@@ -547,7 +591,7 @@ Via Flatpak (recomendado):
 flatpak install flathub com.valvesoftware.Steam
 ```
 
-Ou via RPM se preferes pacote nativo (mais recomendado em AMD, NVIDIA recomendo **Flatpak** devido a dependências):
+Ou via RPM se preferes pacote nativo (mais recomendado em AMD porque o RPM tem acesso direto às bibliotecas Mesa do sistema sem camadas extra; em NVIDIA recomendo **Flatpak** porque inclui as dependências de compatibilidade necessárias para os drivers proprietários sem conflitos):
 
 ```bash
 sudo dnf install steam -y
@@ -675,7 +719,10 @@ O anti-cheat é historicamente o maior obstáculo ao gaming no Linux. O panorama
 
 A **Epic Games** e a **Valve** trabalharam com os fornecedores de anti-cheat para adicionar suporte nativo ao Linux/Proton. Hoje, muitos jogos com EAC e BattlEye funcionam sem problemas adicionais.
 
-Mas como referi para verificar se um jogo específico funciona, consulta sempre o [ProtonDB](https://www.protondb.com/) ou [Are We Anti-Cheat Yet?](https://areweanticheatyet.com/)
+Mas como referi para verificar se um jogo específico funciona, consulta sempre:
+- [ProtonDB](https://www.protondb.com/) — relatos da comunidade sobre compatibilidade de cada jogo
+- [Are We Anti-Cheat Yet?](https://areweanticheatyet.com/) — estado do anti-cheat por jogo no Linux
+- [GamingOnLinux Anti-Cheat List](https://www.gamingonlinux.com/anticheat/) — lista de compatibilidade mantida pelo GamingOnLinux
 
 ---
 
@@ -750,7 +797,67 @@ Faz isto periodicamente ou sempre que atualizas o sistema. Podes também ir a Co
 
 ---
 
-## 12. Notas Finais
+## 12. Resolução de Problemas Comuns
+
+Aqui ficam soluções rápidas para problemas que muitos utilizadores encontram nas primeiras semanas com o Fedora. Se tiveres um problema que não está aqui, a [Arch Wiki](https://wiki.archlinux.org/) é surpreendentemente útil mesmo para Fedora — a maioria das soluções aplicam-se a qualquer distro.
+
+### O sistema não arranca depois de editar o fstab
+
+Sem pânico. Quando o GRUB aparecer, seleciona a opção de arranque normal. Se o sistema ficar preso, reinicia e no GRUB edita a entrada (tecla `e`) adicionando `systemd.unit=emergency.target` no final da linha `linux`. Isto arranca em modo emergência onde podes corrigir o `/etc/fstab` ou restaurar o backup:
+
+```bash
+sudo cp /etc/fstab.bak /etc/fstab
+sudo reboot
+```
+
+### Ecrã preto após atualização (NVIDIA)
+
+Se tens NVIDIA e o sistema arranca com ecrã preto após uma atualização do kernel, é provável que o módulo `akmod` não tenha recompilado a tempo. Arranca pelo kernel anterior no GRUB (tecla de setas para selecionar) e força a recompilação:
+
+```bash
+sudo akmods --force --kernels $(uname -r)
+sudo reboot
+```
+
+### Sem som após instalação
+
+Verifica se o PipeWire está a correr:
+
+```bash
+systemctl --user status pipewire
+```
+
+Se não estiver ativo:
+
+```bash
+systemctl --user enable --now pipewire pipewire-pulse wireplumber
+```
+
+Verifica também no ícone de volume do KDE se o dispositivo de saída correto está selecionado. Por vezes o sistema escolhe HDMI em vez do output analógico ou do DAC USB.
+
+### O Discover não mostra aplicações do Flathub
+
+Isto acontece quando o repositório Flathub não foi adicionado corretamente ou o Fedora ainda tem o seu repositório filtrado ativo. Confirma:
+
+```bash
+flatpak remotes
+```
+
+Deves ver `flathub` na lista. Se não:
+
+```bash
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+```
+
+Reinicia a sessão ou o computador.
+
+### Jogos Steam não arrancam
+
+Verifica primeiro se o Proton está ativado (Steam > Definições > Compatibilidade). Se já está, tenta forçar uma versão diferente de Proton no jogo (botão direito > Propriedades > Compatibilidade). O Proton Experimental ou o Proton-GE mais recente costumam resolver a maioria dos casos. Consulta sempre o [ProtonDB](https://www.protondb.com/) para dicas específicas do jogo.
+
+---
+
+## 13. Notas Finais
 
 Este guia cobre o essencial para teres o Fedora KDE funcional e preparado para gaming. Não é exaustivo, pois o Linux tem sempre mais para explorar e está sempre em constantes mudanças, mas é um ponto de partida sólido para qualquer iniciante começar a sua jornada. 
 Tentarei manter este guia atualizado sempre que possível para colmatar as alterações que vão acontecendo, seja no Fedora ou no panorama do Gaming em geral.
@@ -771,4 +878,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 05 de Março 2026*
+*Última atualização: 06 de Março 2026*
