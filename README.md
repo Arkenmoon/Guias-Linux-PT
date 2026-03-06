@@ -26,7 +26,7 @@ Os guias são escritos com base em experiência real e vão sendo atualizados e 
 | [Setup ao NextDNS](./Setup%20ao%20NextDNS.md) | Como configurar o NextDNS no Linux via systemd-resolved |
 | [Mullvad VPN: Bazzite](Mullvad%20VPN%20%E2%80%94%20Bazzite.md) | Como instalar, configurar e atualizar o Mullvad VPN no Bazzite e outras distros baseadas em Fedora Atomic via rpm-ostree |
 
-## 🇵🇹 Comunidade Linux PT-PT
+## 🇵🇹 Comunidade Linux Portuguesa
 
 Outros projetos da comunidade Linux em Português de Portugal:
 
