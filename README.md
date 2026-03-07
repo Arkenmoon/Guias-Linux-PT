@@ -2,7 +2,8 @@
 > Guias em PT-PT para ajudar utilizadores de língua portuguesa a explorar e configurar o Linux.
 >
 
-[![Em manutenção](https://img.shields.io/badge/Em_Desenvolvimento-Sim-Green?style=plastic)](https://github.com/Arkenmoon/Guias-Linux-PT/graphs/commit-activity)
+![Ativo?](https://img.shields.io/badge/Ativo-Sim-brightgreen?style=flat)
+![Progresso do Projeto](https://img.shields.io/badge/Progresso_do_Projeto-20%25-yellow?style=flat)
 
 ## Sobre o Projeto
 
