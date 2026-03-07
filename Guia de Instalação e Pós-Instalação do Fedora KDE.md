@@ -2,6 +2,7 @@
 
 > Guia prático de pós-instalação do Fedora KDE Plasma Desktop escrito em Português de Portugal.
 > Destinado a utilizadores que migram do Windows e que querem um sistema funcional, bem configurado e pronto para gaming.
+> Este guia pressupõe que tenham alguns conhecimentos técnicos do Windows, mesmo que sejam básicos como formatar uma partição, etc.
 
 ---
 
@@ -14,11 +15,10 @@
    - 3.2 [Firmware do hardware](#32-firmware-do-hardware)
    - 3.3 [RPM Fusion — Repositórios Adicionais](#33-rpm-fusion--repositórios-adicionais)
    - 3.4 [Codecs Multimédia](#34-codecs-multimédia)
-   - 3.5 [Browsers — Firefox e Google Chrome](#35-browsers--firefox-e-google-chrome)
+   - 3.5 [Firefox ou Google Chrome](#35-firefox-ou-google-chrome)
    - 3.6 [Flatpak e Flathub](#36-flatpak-e-flathub)
    - 3.7 [Drivers AMD e NVIDIA](#37-drivers-amd-e-nvidia)
    - 3.8 [Suporte a arquivos comprimidos](#38-suporte-a-arquivos-comprimidos)
-   - 3.9 [Fontes Microsoft](#39-fontes-microsoft)
 4. [Discos e Armazenamento](#4-discos-e-armazenamento)
 5. [Snapshots com Btrfs](#5-snapshots-com-btrfs)
 6. [DNS e Privacidade](#6-dns-e-privacidade)
@@ -160,7 +160,7 @@ sudo dnf install intel-media-driver -y
 > sudo dnf install mesa-va-drivers-freeworld mesa-vdpau-drivers-freeworld -y
 > ```
 
-### 3.5 Browsers: Firefox ou Google Chrome
+### 3.5 Firefox ou Google Chrome
 
 #### Firefox e codecs de vídeo
 
@@ -295,19 +295,6 @@ sudo dnf install p7zip p7zip-plugins unrar -y
 ```
 
 Agora o Dolphin (gestor de ficheiros do KDE) já consegue abrir e extrair estes formatos sem problemas.
-
-### 3.9 Fontes Microsoft
-
-Sem as fonts da Microsoft (Arial, Times New Roman, Courier New, etc.), muitos sites e documentos do Office (mesmo em Web) ficam com formatação errada e desalinhada. 
-Sinceramente para mim isto é quase obrigatório se trabalhas com documentação ou navegas na Internet e não queres ver texto que parece fora do sitio:
-
-```bash
-sudo dnf install curl cabextract xorg-x11-font-utils fontconfig -y
-sudo rpm -i --nodigest --nosignature https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
-sudo fc-cache -fv
-```
-
-O `fc-cache` reconstrói a cache de fontes do sistema. Após este passo as fontes ficam disponíveis em todas as aplicações.
 
 ---
 
@@ -573,7 +560,7 @@ systemctl --user restart pipewire
 
 ---
 
-## 9. Gaming no Linux (Importante se jogas)
+## 9. Gaming no Linux
 
 - O Linux para gaming evoluiu muito, especialmente nos últimos 3-4 anos graças à Steam. Com as ferramentas certas, sou-te sincero, a grande maioria dos jogos da Steam funciona bem incluindo muitos jogos com anti-cheat. Claro que existem alguns em que podes ser banido simplesmente por usar Linux que fica ao risco de cada um e que precisas de ter cuidado. Neste caso aconselho sempre a veres o [Are We Anti-Cheat Yet?](https://areweanticheatyet.com/) para compatibilidade, basta colocares o título que queres jogar e confirmar. Se não aparecer nada é a troca infelizmente de usar Linux, aí o Dual Boot com o Windows pode ser uma opção para estes jogos.
 
@@ -799,7 +786,7 @@ Faz isto periodicamente ou sempre que atualizas o sistema. Podes também ir a Co
 
 ## 12. Resolução de Problemas Comuns
 
-Aqui ficam soluções rápidas para problemas que muitos utilizadores encontram nas primeiras semanas com o Fedora. Se tiveres um problema que não está aqui, a [Arch Wiki](https://wiki.archlinux.org/) é surpreendentemente útil mesmo para Fedora — a maioria das soluções aplicam-se a qualquer distro.
+Aqui ficam soluções rápidas para problemas que muitos utilizadores encontram nas primeiras semanas com o Fedora. Se tiveres um problema que não está aqui, a [Arch Wiki](https://wiki.archlinux.org/) é surpreendentemente útil mesmo para Fedora, a maioria das soluções aplicam-se a qualquer distro.
 
 ### O sistema não arranca depois de editar o fstab
 
@@ -878,4 +865,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 06 de Março 2026*
+*Última atualização: 07 de Março 2026*
