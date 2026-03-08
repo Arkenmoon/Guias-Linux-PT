@@ -1,6 +1,6 @@
-# Mullvad VPN — Bazzite
+# Mullvad VPN para Bazzite e outras distribuições baseadas em Fedora Atomic (Aurora, Fedora Kinoite, etc)
 
-> Como instalar, configurar e atualizar o Mullvad VPN no Bazzite (Fedora Atomic Desktop).
+> Como instalar, configurar e atualizar o Mullvad VPN no Bazzite, distribuições Fedora Atomic (Kinoite, etc), Aurora, entre outras.
 
 ---
 
@@ -190,4 +190,4 @@ mullvad dns get
 
 ---
 
-*Última atualização: 03 de Março 2026*
+*Última atualização: 08 de Março 2026*
