@@ -143,10 +143,24 @@ Deves ver `rpmfusion-free` e `rpmfusion-nonfree` na lista.
 
 Sem codecs o Fedora não reproduz a maioria dos formatos de vídeo e áudio (MP3, H.264, HEVC, AAC, etc.) nativamente. Com o RPM Fusion instalado resolve-se da seguinte forma:
 
+> ⚠️ **Nota Fedora 43 + DNF5:** Os grupos `@multimedia` e `sound-and-video` usados em guias mais antigos **não funcionam** no DNF5. Os pacotes têm de ser instalados individualmente como indicado abaixo.
+
 ```bash
 sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
-sudo dnf group upgrade multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin -y
-sudo dnf group upgrade sound-and-video -y
+```
+
+De seguida instala os plugins GStreamer necessários para suporte completo de codecs:
+
+```bash
+sudo dnf install --setopt="install_weak_deps=False" \
+  gstreamer1-plugins-good \
+  gstreamer1-plugins-bad-free \
+  gstreamer1-plugins-bad-freeworld \
+  gstreamer1-plugins-ugly \
+  gstreamer1-plugins-ugly-free \
+  gstreamer1-plugin-openh264 \
+  gstreamer1-plugin-libav \
+  --exclude=PackageKit-gstreamer-plugin -y
 ```
 
 Para suporte adicional a formatos da **Intel** (apenas se tens gráficos integrados ou dedicados Intel, **não corras isto em AMD ou NVIDIA**):
@@ -155,7 +169,7 @@ Para suporte adicional a formatos da **Intel** (apenas se tens gráficos integra
 sudo dnf install intel-media-driver -y
 ```
 
-> ⚠️ Se usas AMD, o suporte a VA-API (aceleração de hardware para vídeo) já vem incluído no driver open-source `mesa`. Para garantir a melhor compatibilidade, substitui os drivers Mesa padrão pelos do RPM Fusion (o `swap` é necessário pois os drivers padrão já estão instalados e entram em conflito com os freeworld):
+> ⚠️ Se usas AMD, o suporte a VA-API (aceleração de hardware para vídeo) já vem incluído no driver open-source `mesa`. No entanto, os drivers padrão do Fedora têm suporte a H.264/H.265 removido por questões de licença. Para teres aceleração de hardware completa, substitui-os pelos do RPM Fusion com `swap` (necessário pois os drivers padrão já estão instalados e entram em conflito com os freeworld):
 > ```bash
 > sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
 > sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
