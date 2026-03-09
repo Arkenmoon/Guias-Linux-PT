@@ -1,4 +1,4 @@
-# Setup Fedora KDE — Guia PT-PT
+ Setup Fedora KDE — Guia PT-PT
 
 > Guia prático de pós-instalação do Fedora KDE Plasma Desktop escrito em Português de Portugal.
 > Destinado a utilizadores que migram do Windows e que querem um sistema funcional, bem configurado e pronto para gaming.
@@ -155,9 +155,10 @@ Para suporte adicional a formatos da **Intel** (apenas se tens gráficos integra
 sudo dnf install intel-media-driver -y
 ```
 
-> ⚠️ Se usas AMD, o suporte a VA-API (aceleração de hardware para vídeo) já vem incluído no driver open-source `mesa`. Para garantir a melhor compatibilidade, instala também os drivers VA-API do RPM Fusion:
+> ⚠️ Se usas AMD, o suporte a VA-API (aceleração de hardware para vídeo) já vem incluído no driver open-source `mesa`. Para garantir a melhor compatibilidade, substitui os drivers Mesa padrão pelos do RPM Fusion (o `swap` é necessário pois os drivers padrão já estão instalados e entram em conflito com os freeworld):
 > ```bash
-> sudo dnf install mesa-va-drivers-freeworld mesa-vdpau-drivers-freeworld -y
+> sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
+> sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
 > ```
 
 ### 3.5 Firefox ou Google Chrome
@@ -865,4 +866,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 07 de Março 2026*
+*Última atualização: 09 de Março 2026*
