@@ -1,4 +1,4 @@
- Setup Fedora KDE — Guia PT-PT
+  Setup Fedora KDE — Guia PT-PT
 
 > Guia prático de pós-instalação do Fedora KDE Plasma Desktop escrito em Português de Portugal.
 > Destinado a utilizadores que migram do Windows e que querem um sistema funcional, bem configurado e pronto para gaming.
@@ -179,13 +179,19 @@ sudo dnf install intel-media-driver -y
 
 #### Firefox e codecs de vídeo
 
-Caso uses Firefox, o mesmo no Fedora precisa de ajuda extra para reproduzir certos vídeos H.264 em sites como o Twitter/Facebook entre outros. Isto resolve-se com o codec OpenH264 da Cisco:
+O Firefox no Fedora precisa do codec OpenH264 da Cisco para reproduzir certos vídeos H.264 em sites como Twitter/Facebook entre outros. O repositório da Cisco já vem incluído por defeito desde o Fedora 33 e o Firefox descarrega o plugin automaticamente. No entanto, se precisares de o instalar manualmente:
 
 ```bash
-sudo dnf install openh264 gstreamer1-plugin-openh264 mozilla-openh264 -y
-sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
-sudo dnf update -y
+sudo dnf config-manager --set-enabled fedora-cisco-openh264
+sudo dnf install openh264 -y
 ```
+
+> ⚠️ **Nota:** O `gstreamer1-plugin-openh264` já foi instalado na secção 3.4, não precisas de o repetir. O `mozilla-openh264` também não é necessário pois o Firefox faz o download do plugin automaticamente.
+
+> ⚠️ **Problema conhecido:** A Cisco tem bloqueado o acesso aos seus servidores para algumas regiões, o que pode resultar em erros 403 durante as atualizações do sistema. Se isso acontecer, desativa o repositório:
+> ```bash
+> sudo dnf config-manager --set-disabled fedora-cisco-openh264
+> ```
 
 Depois de instalar, reinicia o Firefox e verifica que o plugin **OpenH264** está ativo em `about:addons` na secção de Plugins.
 
