@@ -163,17 +163,17 @@ sudo dnf install --setopt="install_weak_deps=False" \
   --exclude=PackageKit-gstreamer-plugin -y
 ```
 
-Para suporte adicional a formatos da **Intel** (apenas se tens gráficos integrados ou dedicados Intel, **não corras isto em AMD ou NVIDIA**):
+>Para suporte adicional a formatos da **Intel** (apenas se tens gráficos integrados ou dedicados Intel, **não corras isto em AMD ou NVIDIA**):
 
 ```bash
 sudo dnf install intel-media-driver -y
 ```
+>⚠️ Se usas AMD, o suporte a VA-API (aceleração de hardware para vídeo) já vem incluído no driver open-source mesa. No entanto as builds padrão do Fedora têm o suporte a decodificação H.264/H.265 via VA-API removido por questões de licença. O swap abaixo substitui apenas os decoders de vídeo do Mesa (VA-API/VDPAU) pelas versões do RPM Fusion que incluem esses codecs, não estás a trocar os drivers da GPU, o amdgpu e o Mesa 3D continuam exactamente iguais. O swap é necessário porque os pacotes padrão já estão instalados e entram em conflito com os freeworld:
 
-> ⚠️ Se usas AMD, o suporte a VA-API (aceleração de hardware para vídeo) já vem incluído no driver open-source `mesa`. No entanto, os drivers padrão do Fedora têm suporte a H.264/H.265 removido por questões de licença. Para teres aceleração de hardware completa, substitui-os pelos do RPM Fusion com `swap` (necessário pois os drivers padrão já estão instalados e entram em conflito com os freeworld):
-> ```bash
-> sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
-> sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
-> ```
+```bash
+sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
+sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
+```
 
 ### 3.5 Firefox ou Google Chrome
 
@@ -197,14 +197,14 @@ Depois de instalar, reinicia o Firefox e verifica que o plugin **OpenH264** est�
 
 #### Google Chrome
 
-Se preferes o Chrome (que é o browser com melhor compatibilidade web, segurança e sincronização completa com a tua conta Google), podes instalá-lo diretamente via .rpm. Não há nada de errado em usar Chrome no Linux, funciona nativamente sem problemas e é mantido pela Google. 
-Instala diretamente sem precisar de ir ao site:
+Se preferes utilizar algo como o Google Chrome, podes instalá-lo diretamente via .rpm. Não há nada de errado em usar Chrome no Linux, funciona nativamente sem problemas. 
+Instala daqui diretamente sem precisares de ir ao site:
 
 ```bash
 sudo dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y
 ```
 
-Isto adiciona automaticamente o repositório da Google ao teu sistema. As atualizações futuras vêm com o `sudo dnf upgrade` normal, zero manutenção.
+Isto adiciona automaticamente o repositório da Google ao teu sistema. As atualizações futuras vêm com o `sudo dnf upgrade` normal, zero manutenção adicional da tua parte.
 
 ### 3.6 Flatpak e Flathub
 
