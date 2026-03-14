@@ -1,12 +1,11 @@
-# Como Configurar Discos Secundários — Fedora Linux
+# Como Configurar Discos Secundários no Fedora
 
-Guia completo para montar discos internos de forma permanente no Fedora (KDE/Dolphin). Compatível com BTRFS, EXT4 e ExFAT.
+Guia completo para montar discos internos de forma permanente no Fedora. Compatível com BTRFS, EXT4 e ExFAT.
 
 ---
-Última atualização: 03 de Março 2026
 ## Pré-Requisitos
 
-- Fedora Linux (qualquer versão recente com systemd)
+- Fedora (qualquer versão recente com systemd)
 - Acesso `sudo`
 - Discos já formatados com o filesystem pretendido (BTRFS, EXT4 ou ExFAT)
 - Terminal aberto (Konsole, GNOME Terminal, etc.)
@@ -268,5 +267,8 @@ df -h | grep /mnt/
 - Para verificar a saúde de discos BTRFS: `sudo btrfs filesystem show`
 - Para verificar a saúde de discos EXT4: `sudo e2fsck -n /dev/sdXN` (apenas com o disco desmontado)
 - Para verificar a saúde de discos com SMART: `sudo smartctl -a /dev/sdX` (requer o pacote `smartmontools`)
+
+Última atualização: 14 de Março 2026
+
 
 Última atualização: 03 de Março 2026
