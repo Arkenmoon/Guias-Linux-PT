@@ -23,7 +23,7 @@ Os guias são escritos com base em experiência real e vão sendo expandidos ao 
 | Guia | Descrição |
 |------|-----------|
 | [Guia para Fedora KDE](./Guia%20de%20Instalação%20e%20Pós-Instalação%20do%20Fedora%20KDE.md) | Guia completo de instalação e pós-instalação do Fedora KDE |
-| [Configurar Discos Secundários](./Como%20Configurar%20Discos%20Secundários%20—%20Fedora%20Linux.md) | Como montar discos internos no Fedora (BTRFS/EXT4/ExFAT) |
+| [Configurar Discos Secundários](./Como%20Configurar%20Discos%20Secundários%20—%20Fedora.md) | Como montar discos internos no Fedora (BTRFS/EXT4/ExFAT) |
 | [Setup ao NextDNS](./Setup%20ao%20NextDNS.md) | Como configurar o NextDNS no Fedora via systemd-resolved |
 
 ## 🖥️ Guias para outras distribuições
