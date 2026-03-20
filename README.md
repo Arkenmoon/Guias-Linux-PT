@@ -3,7 +3,6 @@
 > Guias práticos para Fedora em Português, objectivo é ajudar utilizadores lusófonos a configurar e tirar o máximo partido do seu sistema.
 
 ![Ativo?](https://img.shields.io/badge/Ativo-Sim-brightgreen?style=flat)
-![Progresso do Projeto](https://img.shields.io/badge/Progresso-40%25-yellow?style=flat)
 
 ## Sobre o Projeto
 
@@ -25,6 +24,7 @@ Os guias são escritos com base em experiência real e vão sendo expandidos ao 
 | [Guia para Fedora KDE](./Guia%20de%20Instalação%20e%20Pós-Instalação%20do%20Fedora%20KDE.md) | Guia completo de instalação e pós-instalação do Fedora KDE |
 | [Configurar Discos Secundários](./Como%20Configurar%20Discos%20Secundários%20no%20Fedora.md) | Como montar discos internos no Fedora (BTRFS/EXT4/ExFAT) |
 | [Setup ao NextDNS](./Setup%20ao%20NextDNS.md) | Como configurar o NextDNS no Fedora via systemd-resolved |
+| Guia Mullvad VPN *(em breve)* | Instalação e configuração do Mullvad no Fedora |
 
 ## 🖥️ Guias para outras distribuições
 
