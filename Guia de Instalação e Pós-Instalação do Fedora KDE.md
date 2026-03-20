@@ -1,6 +1,6 @@
-  Setup Fedora KDE — Guia PT-PT
+## Guia Fedora KDE
 
-> Guia prático de pós-instalação do Fedora KDE Plasma Desktop escrito em Português de Portugal.
+> Guia prático instalação e pós-instalação do Fedora KDE Plasma Desktop escrito em Português de Portugal.
 > Destinado a utilizadores que migram do Windows e que querem um sistema funcional, bem configurado e pronto para gaming.
 > Este guia pressupõe que tenham alguns conhecimentos técnicos do Windows, mesmo que sejam básicos como formatar uma partição, etc.
 
@@ -22,8 +22,6 @@
 4. [Discos e Armazenamento](#4-discos-e-armazenamento)
 5. [Snapshots com Btrfs](#5-snapshots-com-btrfs)
 6. [DNS e Privacidade](#6-dns-e-privacidade)
-   - 6.1 [NextDNS via systemd-resolved](#61-nextdns-via-systemd-resolved)
-   - 6.2 [Mullvad VPN](#62-mullvad-vpn)
 7. [Wayland vs X11](#7-wayland-vs-x11)
 8. [Periféricos e Configuração](#8-periféricos-e-configuração)
 9. [Gaming no Linux](#9-gaming-no-linux)
@@ -202,6 +200,7 @@ Instala daqui diretamente sem precisares de ir ao site:
 
 ```bash
 sudo dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y
+sudo rpm --import https://dl.google.com/linux/linux_signing_key.pub
 ```
 
 Isto adiciona automaticamente o repositório da Google ao teu sistema. As atualizações futuras vêm com o `sudo dnf upgrade` normal, zero manutenção adicional da tua parte.
@@ -321,87 +320,9 @@ Agora o Dolphin (gestor de ficheiros do KDE) já consegue abrir e extrair estes 
 
 ## 4. Discos e Armazenamento
 
-Se tens discos secundários (SSDs ou HDDs além do disco principal), precisas de os configurar para montarem automaticamente. O Linux não faz isso por omissão.
+Se tens discos secundários (SSDs ou HDDs além do disco principal), este tema tem guia próprio com cobertura completa: montagem permanente, permissões, referência de flags para BTRFS, EXT4 e ExFAT, resolução de problemas e muito mais.
 
-### Identificar os discos
-
-```bash
-lsblk -f
-```
-
-Este comando lista todos os discos e partições, com o sistema de ficheiros e UUID de cada um. Anota o **UUID** da partição que queres montar pois vais precisar dele.
-
-### Criar o ponto de montagem
-
-Um "ponto de montagem" é simplesmente uma pasta onde o disco vai aparecer. Cria-a onde preferires:
-
-```bash
-sudo mkdir -p /mnt/dados
-sudo mkdir -p /mnt/jogos
-```
-
-Podes usar `/mnt/`, `/media/`, ou qualquer outra localização. O importante é seres consistente.
-
-### Editar o fstab
-
-O ficheiro `/etc/fstab` define o que monta automaticamente no arranque. **Edita-o com cuidado**, um erro aqui pode impedir o sistema de arrancar.
-
-> ⚠️ **Antes de qualquer edição**, faz uma cópia de segurança: `sudo cp /etc/fstab /etc/fstab.bak`
-
-```bash
-sudo nano /etc/fstab
-```
-
-Adiciona uma linha por disco **no final do ficheiro** (nunca edites as linhas já existentes), no formato:
-
-```
-UUID=<o-teu-uuid>  /mnt/dados  ext4  defaults  0  2
-```
-
-Substitui:
-- `<o-teu-uuid>` pelo UUID que anotaste com `lsblk -f`
-- `/mnt/dados` pelo teu ponto de montagem
-- `ext4` pelo sistema de ficheiros correto (pode ser `btrfs`, `ntfs-3g`, `exfat`, etc.)
-
-#### Exemplos por sistema de ficheiros
-
-**EXT4** (Linux nativo):
-```
-UUID=xxxx-xxxx  /mnt/dados  ext4  defaults,noatime  0  2
-```
-
-**BTRFS** (Linux nativo):
-```
-UUID=xxxx-xxxx  /mnt/jogos  btrfs  defaults,noatime,compress=zstd,space_cache=v2  0  0
-```
-
-**NTFS** (Windows - Atenção a leitura/escrita funciona mas com limitações):
-```
-UUID=xxxx-xxxx  /mnt/windows  ntfs-3g  defaults,uid=1000,gid=1000  0  0
-```
-
-**ExFAT** (compatível com Windows e macOS):
-```
-UUID=xxxx-xxxx  /mnt/externo  exfat  defaults,uid=1000,gid=1000  0  0
-```
-
-Para ExFAT precisas do pacote:
-```bash
-sudo dnf install exfatprogs -y
-```
-
-### Testar sem reiniciar
-
-```bash
-sudo systemctl daemon-reload
-sudo mount -a
-```
-
-Se não aparecerem erros, a configuração está correta. Reinicia para confirmar que monta no arranque.
-
-> ⚠️ Se `mount -a` devolver erros, **não reinicies o sistema**. Corrige o fstab primeiro ou restaura o backup: `sudo cp /etc/fstab.bak /etc/fstab`
-
-> Para um guia mais detalhado sobre configuração de discos secundários, incluindo resolução de problemas, permissões e referência completa de flags, consulta: [Como Configurar Discos Secundários — Fedora Linux](https://github.com/Arkenmoon/Guias-Linux-PT/blob/main/Como%20Configurar%20Discos%20Secund%C3%A1rios%20%E2%80%94%20Fedora%20Linux.md)
+📄 **[Como Configurar Discos Secundários no Fedora](./Como%20Configurar%20Discos%20Secund%C3%A1rios%20no%20Fedora.md)**
 
 ---
 
@@ -437,76 +358,13 @@ sudo systemctl enable --now snapper-cleanup.timer
 
 ## 6. DNS e Privacidade
 
-> ⚠️ Esta secção é totalmente opcional, passa ao [passo 7](#7-wayland-vs-x11) se não te interessa. Aqui digo como fazer setup ao NextDNS e MullvadVPN que é o setup que tenho atualmente e que poderá ajudar outros utilizadores que poderão usar estes serviços. Futuramente incluirei também um guia com vários provedores de DNS e VPN.
+> ⚠️ Esta secção é totalmente opcional, passa ao [passo 7](#7-wayland-vs-x11) se não te interessa.
 
+Esta secção foi expandida para guias individuais dedicados, onde cada tema é coberto com mais detalhe:
 
-### 6.1 NextDNS via systemd-resolved
+📄 **[Setup ao NextDNS](./Setup%20ao%20NextDNS.md)** — Como configurar o NextDNS no Fedora via systemd-resolved para bloquear anúncios, rastreadores e domínios maliciosos a nível de rede.
 
-O **NextDNS** é um serviço de DNS personalizado que permite bloquear anúncios, rastreadores e domínios maliciosos a nível de rede na nuvem. O plano gratuito cobre 300.000 queries por mês mas para mim compensa ter o plano pago (não é um anúncio prometo 🙂)
-
-O Fedora usa `systemd-resolved` para gerir DNS, o que torna a configuração simples.
-
-Cria (ou edita) o ficheiro de configuração do resolved:
-
-```bash
-sudo nano /etc/systemd/resolved.conf
-```
-
-Adiciona ou descomenta as seguintes linhas (substitui os endereços pelos teus do NextDNS):
-
-```ini
-[Resolve]
-DNS=45.90.28.XXXX#xxxxxxxxxxxx.dns.nextdns.io
-DNS=45.90.30.XXXX#xxxxxxxxxxxx.dns.nextdns.io
-DNSOverTLS=yes
-DNSSEC=allow-downgrade
-```
-
-> ⚠️ **Nota sobre DNSSEC:** Usa `DNSSEC=allow-downgrade` em vez de `DNSSEC=yes`. O modo `yes` pode causar falhas de resolução com alguns serviços de DNS (incluindo o NextDNS) porque força validação estrita que nem todos os domínios suportam. O modo `allow-downgrade` tenta validar quando possível mas não bloqueia quando o DNSSEC não está disponível.
-
-> ⚠️ Os teus endereços NextDNS específicos estão no painel em [my.nextdns.io](https://my.nextdns.io) após criares uma conta e um perfil.
-
-Reinicia o serviço:
-
-```bash
-sudo systemctl restart systemd-resolved
-```
-
-Verifica se está a funcionar:
-
-```bash
-resolvectl status
-```
-
-Procura o teu servidor NextDNS na secção `DNS Servers`.
-
-### 6.2 Mullvad VPN
-
-O **Mullvad** é um dos VPNs mais respeitados em termos de privacidade — sem conta associada a email, pagamento anónimo possível, política de zero logs auditada.
-
-#### Instalar no Fedora
-
-Adiciona o repositório oficial do Mullvad:
-
-```bash
-sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo
-```
-
-Instala a aplicação:
-
-```bash
-sudo dnf install mullvad-vpn -y
-```
-
-Abre a aplicação pelo menu de aplicações ou:
-
-```bash
-mullvad-vpn
-```
-
-Faz login com o teu número de conta Mullvad (não há email — o teu identificador é apenas o número de conta).
-
-> O Mullvad tem uma app gráfica intuitiva. Podes configurar kill switch, split tunneling e escolher protocolo (WireGuard é recomendado) diretamente na interface.
+📄 **Guia Mullvad VPN** *(em breve)* — Instalação e configuração do Mullvad no Fedora, incluindo kill switch, split tunneling e protocolo WireGuard.
 
 ---
 
@@ -886,4 +744,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 09 de Março 2026*
+*Última atualização: 20 de Março 2026*
