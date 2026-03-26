@@ -141,7 +141,7 @@ Deves ver `rpmfusion-free` e `rpmfusion-nonfree` na lista.
 
 Sem codecs o Fedora não reproduz a maioria dos formatos de vídeo e áudio (MP3, H.264, HEVC, AAC, etc.) nativamente. Com o RPM Fusion instalado resolve-se da seguinte forma:
 
-> ⚠️ **Nota Fedora 43 + DNF5:** Os grupos `@multimedia` e `sound-and-video` usados em guias mais antigos **não funcionam** no DNF5. Os pacotes têm de ser instalados individualmente como indicado abaixo.
+> ⚠️ **Nota Fedora 43 + DNF5:** O `dnf group install multimedia` usado em guias mais antigos **não funciona** da forma esperada no DNF5. Usamos os pacotes individualmente abaixo para controlo total sobre o que é instalado e para evitar dependências desnecessárias.
 
 ```bash
 sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
@@ -377,7 +377,19 @@ O Fedora KDE usa **Wayland** por omissão como servidor gráfico. Há situaçõe
 
 Na tela de login (SDDM), antes de inserires a password, olha para o canto inferior esquerdo. Há um menu dropdown onde podes escolher entre **Plasma (Wayland)** e **Plasma (X11)**. A escolha é por sessão — podes alternar sempre que quiseres.
 
+> ⚠️ **Fedora 44 (previsto Abril 2026):** O SDDM será substituído pelo **Plasma Login Manager** como gestor de sessão por defeito. A localização desta opção poderá mudar ligeiramente.
+
 > Recomendo usar Wayland por omissão e só trocar para X11 se tiveres problemas concretos com um jogo ou aplicação específica. Em AMD (como a RX 9070 XT), Wayland funciona muito bem para gaming.
+
+### HDR no KDE Plasma 6.4+
+
+O KDE Plasma 6.4 (incluído no Fedora 43) tem suporte nativo a HDR para placas compatíveis como a RX 9070 XT. Para ativar:
+
+1. Vai a **Definições do Sistema > Ecrã e Monitor**
+2. Seleciona o teu monitor
+3. Ativa **HDR** e usa o **Assistente de Calibração HDR** para ajustar brilho e precisão de cor
+
+> ⚠️ O HDR no Wayland requer um monitor com suporte HDR10. Verifica se o teu monitor suporta antes de ativar.
 
 ---
 
@@ -433,6 +445,32 @@ Reinicia o PipeWire para aplicar:
 ```bash
 systemctl --user restart pipewire
 ```
+
+### Áudio Bluetooth: Codecs de alta qualidade (Opcional)
+
+Se usas headphones sem fios, o PipeWire suporta codecs de alta qualidade como aptX e LDAC mas precisam de ser instalados separadamente:
+
+```bash
+sudo dnf install libfreeaptx libldac fdk-aac -y
+```
+
+Reinicia o PipeWire após instalar:
+
+```bash
+systemctl --user restart pipewire wireplumber
+```
+
+> O `libfreeaptx` ativa aptX/aptX HD, o `libldac` ativa LDAC (codec Sony de alta resolução) e o `fdk-aac` melhora suporte AAC. O codec disponível depende do teu headphone, o PipeWire resolve automaticamente o que é suportado por ambos os lados.
+
+### Fontes — Compatibilidade com documentos
+
+O Fedora inclui fontes básicas mas para melhor compatibilidade com documentos Office e conteúdo web instala as fontes Noto e Liberation:
+
+```bash
+sudo dnf install google-noto-sans-fonts google-noto-serif-fonts liberation-fonts -y
+```
+
+As fontes **Liberation** são substitutos métricos das fontes Microsoft (Arial, Times New Roman, Courier New) — essencial para que documentos `.docx` abertos no LibreOffice mantenham o layout correto.
 
 ---
 
@@ -741,4 +779,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 20 de Março 2026*
+*Última atualização: 26 de Março 2026*
