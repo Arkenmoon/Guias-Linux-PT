@@ -166,7 +166,7 @@ sudo dnf install --setopt="install_weak_deps=False" \
 ```bash
 sudo dnf install intel-media-driver -y
 ```
->⚠️ Se usas AMD, o suporte a VA-API (aceleração de hardware para vídeo) já vem incluído no driver open-source mesa. No entanto as builds padrão do Fedora têm o suporte a decodificação H.264/H.265 via VA-API removido por questões de licença. O swap abaixo substitui apenas os decoders de vídeo do Mesa (VA-API/VDPAU) pelas versões do RPM Fusion que incluem esses codecs, não estás a trocar os drivers da GPU, o amdgpu e o Mesa 3D continuam exactamente iguais. O swap é necessário porque os pacotes padrão já estão instalados e entram em conflito com os freeworld:
+>⚠️ As builds padrão do Fedora têm o suporte a decodificação H.264/H.265 via VA-API removido por questões de licença. O swap abaixo substitui apenas os decoders de vídeo do Mesa (VA-API/VDPAU) pelas versões do RPM Fusion que incluem esses codecs, não estás a trocar os drivers da GPU, o amdgpu e o Mesa 3D continuam exactamente iguais. O swap é necessário porque os pacotes padrão já estão instalados e entram em conflito com os freeworld:
 
 ```bash
 sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
@@ -246,16 +246,13 @@ Abre o Flatseal, seleciona a aplicação problemática e ajusta o acesso ao sist
 
 ### 3.7 Drivers AMD e NVIDIA
 
-#### AMD (RX 5000 e mais recente)
+Se tens uma placa AMD, **não precisas de instalar drivers manualmente**. O kernel Linux já inclui o driver open-source `amdgpu` que funciona excelentemente.
 
-Se tens uma placa AMD moderna (série RX 5000 em diante), **não precisas de instalar drivers manualmente**. O kernel Linux já inclui o driver open-source `amdgpu` que funciona excelentemente.
-
-Para garantir que tens as ferramentas de userspace atualizadas:
+Para garantir que tens as ferramentas de userspace atualizadas e tens compatibilidade 32-bit com Steam/Proton
 
 ```bash
-sudo dnf install mesa-dri-drivers mesa-vulkan-drivers vulkan-tools -y
+sudo dnf install mesa-dri-drivers mesa-vulkan-drivers mesa-vulkan-drivers.i686 vulkan-tools -y
 ```
-
 Verifica se o Vulkan está a funcionar:
 
 ```bash
