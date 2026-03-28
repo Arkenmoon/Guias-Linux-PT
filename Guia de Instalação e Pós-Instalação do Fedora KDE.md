@@ -52,7 +52,7 @@ Pessoalmente, a combinação Fedora + KDE Plasma é mais sólida, moderna e pers
 
 ### 2.1 O que precisas
 
-- Uma pen USB **com pelo menos 8 GB**
+- Uma pen USB **com pelo menos 4 GB** (recomendado 8 GB para mais margem)
 - O ISO do Fedora KDE: [https://fedoraproject.org/kde/](https://fedoraproject.org/kde/)
 - [Balena Etcher](https://etcher.balena.io/) ou [Ventoy](https://www.ventoy.net/) para criar a pen bootável 
 - Podes usar também o **Fedora Media Writer** que está na zona onde vais buscar o ISO, é bastante fácil de usar
@@ -141,25 +141,21 @@ Deves ver `rpmfusion-free` e `rpmfusion-nonfree` na lista.
 
 Sem codecs o Fedora não reproduz a maioria dos formatos de vídeo e áudio (MP3, H.264, HEVC, AAC, etc.) nativamente. Com o RPM Fusion instalado resolve-se da seguinte forma:
 
-> ⚠️ **Nota Fedora 43 + DNF5:** O `dnf group install multimedia` usado em guias mais antigos **não funciona** da forma esperada no DNF5. Usamos os pacotes individualmente abaixo para controlo total sobre o que é instalado e para evitar dependências desnecessárias.
+> ⚠️ **Nota Fedora 41+:** O antigo comando `dnf group install multimedia` foi substituído por `dnf upgrade @multimedia`. Usa sempre `upgrade` (e não `install`) para grupos no Fedora moderno — garante que todos os pacotes do grupo são instalados **e** atualizados, incluindo os do RPM Fusion.
+
+Primeiro troca o `ffmpeg-free` limitado pelo `ffmpeg` completo do RPM Fusion:
 
 ```bash
 sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
 ```
 
-De seguida instala os plugins GStreamer necessários para suporte completo de codecs:
+De seguida instala todos os plugins de codecs via o grupo oficial do RPM Fusion:
 
 ```bash
-sudo dnf install --setopt="install_weak_deps=False" \
-  gstreamer1-plugins-good \
-  gstreamer1-plugins-bad-free \
-  gstreamer1-plugins-bad-freeworld \
-  gstreamer1-plugins-ugly \
-  gstreamer1-plugins-ugly-free \
-  gstreamer1-plugin-openh264 \
-  gstreamer1-plugin-libav \
-  --exclude=PackageKit-gstreamer-plugin -y
+sudo dnf upgrade @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin -y
 ```
+
+Este comando instala e atualiza automaticamente todos os plugins GStreamer necessários (good, bad-free, bad-freeworld, ugly, libav, openh264, etc.) de uma só vez, incluindo os do RPM Fusion.
 
 >Para suporte adicional a formatos da **Intel** (apenas se tens gráficos integrados ou dedicados Intel, **não corras isto em AMD ou NVIDIA**):
 
@@ -169,9 +165,10 @@ sudo dnf install intel-media-driver -y
 >⚠️ As builds padrão do Fedora têm o suporte a decodificação H.264/H.265 via VA-API removido por questões de licença. O swap abaixo substitui apenas os decoders de vídeo do Mesa (VA-API/VDPAU) pelas versões do RPM Fusion que incluem esses codecs, não estás a trocar os drivers da GPU, o amdgpu e o Mesa 3D continuam exactamente iguais. O swap é necessário porque os pacotes padrão já estão instalados e entram em conflito com os freeworld:
 
 ```bash
-sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
-sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
+sudo dnf install mesa-va-drivers-freeworld mesa-va-drivers-freeworld.i686 --allowerasing -y
 ```
+
+> ⚠️ O `--allowerasing` remove automaticamente os pacotes `mesa-va-drivers` e `mesa-vdpau-drivers` padrão que conflituam com os freeworld, substituindo-os numa única transação limpa. O `mesa-vdpau-drivers-freeworld` não precisa de ser instalado separadamente — a partir da versão 25.3.6 do RPM Fusion foi fundido dentro do `mesa-va-drivers-freeworld`.
 
 ### 3.5 Firefox ou Google Chrome
 
@@ -180,7 +177,7 @@ sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
 O Firefox no Fedora precisa do codec OpenH264 da Cisco para reproduzir certos vídeos H.264 em sites como Twitter/Facebook entre outros. O repositório da Cisco já vem incluído por defeito desde o Fedora 33 e o Firefox descarrega o plugin automaticamente. No entanto, se precisares de o instalar manualmente:
 
 ```bash
-sudo dnf config-manager --set-enabled fedora-cisco-openh264
+sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
 sudo dnf install openh264 -y
 ```
 
@@ -188,7 +185,7 @@ sudo dnf install openh264 -y
 
 > ⚠️ **Problema conhecido:** A Cisco tem bloqueado o acesso aos seus servidores para algumas regiões, o que pode resultar em erros 403 durante as atualizações do sistema. Se isso acontecer, desativa o repositório:
 > ```bash
-> sudo dnf config-manager --set-disabled fedora-cisco-openh264
+> sudo dnf config-manager setopt fedora-cisco-openh264.enabled=0
 > ```
 
 Depois de instalar, reinicia o Firefox e verifica que o plugin **OpenH264** está ativo em `about:addons` na secção de Plugins.
@@ -218,7 +215,7 @@ flatpak remote-delete fedora
 Agora sim adiciona o Flathub:
 
 ```bash
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
 Caso as aplicações não apareçam no **Discover**, reinicia a sessão ou o computador que resolve o problema.
@@ -265,11 +262,12 @@ A NVIDIA no Linux é historicamente complicada (felizmente no futuro irá deixar
 
 > ⚠️ **Secure Boot:** O módulo kernel da NVIDIA requer assinatura se tiveres Secure Boot ativo. É mais fácil desativá-lo na BIOS antes de instalar os drivers.
 
-> ⚠️ **Para GPUs da série RTX 4000 ou mais recente**, o Fedora precisa de um macro definido antes de instalar o driver para ativar o módulo kernel open-source:
+> ⚠️ **Para GPUs da série RTX 5000 (Blackwell) ou mais recente**, o módulo kernel open-source é **obrigatório** pois os drivers proprietários já não suportam estas GPUs. Ativa-o **antes** de instalar o `akmod-nvidia`:
 > ```bash
-> sudo sh -c 'echo "%_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'
+> sudo mkdir -p /etc/rpm/macros.d/
+> echo "%_with_nvidia_open 1" | sudo tee /etc/rpm/macros.d/macros.nvidia-open
 > ```
-> Corre este comando **antes** de instalar o `akmod-nvidia`.
+> Para **RTX 4000 (Ada Lovelace) e anteriores**, o `akmod-nvidia` padrão funciona perfeitamente e **não precisas** deste passo. O módulo open está disponível como opção avançada mas o RPM Fusion não o recomenda para uso geral.
 
 Instala os drivers proprietários:
 
@@ -377,13 +375,13 @@ O Fedora KDE usa **Wayland** por omissão como servidor gráfico. Há situaçõe
 
 Na tela de login (SDDM), antes de inserires a password, olha para o canto inferior esquerdo. Há um menu dropdown onde podes escolher entre **Plasma (Wayland)** e **Plasma (X11)**. A escolha é por sessão — podes alternar sempre que quiseres.
 
-> ⚠️ **Fedora 44 (previsto Abril 2026):** O SDDM será substituído pelo **Plasma Login Manager** como gestor de sessão por defeito. A localização desta opção poderá mudar ligeiramente.
+> ⚠️ **Fedora 44 (previsto para 14 de Abril 2026):** O SDDM será substituído pelo **Plasma Login Manager** como gestor de sessão por defeito. A localização desta opção poderá mudar ligeiramente.
 
 > Recomendo usar Wayland por omissão e só trocar para X11 se tiveres problemas concretos com um jogo ou aplicação específica. Em AMD (como a RX 9070 XT), Wayland funciona muito bem para gaming.
 
-### HDR no KDE Plasma 6.4+
+### HDR no KDE Plasma 6.6+
 
-O KDE Plasma 6.4 (incluído no Fedora 43) tem suporte nativo a HDR para placas compatíveis como a RX 9070 XT. Para ativar:
+O KDE Plasma 6.6 (atualizado no Fedora 43 desde Fevereiro 2026, originalmente lançado com 6.4) tem suporte nativo a HDR para placas compatíveis como a RX 9070 XT. Para ativar:
 
 1. Vai a **Definições do Sistema > Ecrã e Monitor**
 2. Seleciona o teu monitor
@@ -659,13 +657,15 @@ Clica com o botão direito no ambiente de trabalho > Adicionar Widgets para expl
 
 ### Dual Boot — Fix do relógio
 
-Se tens dual boot com Windows, vais reparar que o relógio fica errado quando saltas entre sistemas operativos. Isto acontece porque o Windows usa hora local no relógio do hardware e o Linux usa UTC. A correção:
+Se tens dual boot com Windows, vais reparar que o relógio fica errado quando saltas entre sistemas operativos. Isto acontece porque o Windows usa hora local no relógio do hardware e o Linux usa UTC. A correção mais simples é dizer ao Linux para usar hora local também:
 
 ```bash
-sudo timedatectl set-local-rtc 0 --adjust-system-clock
+sudo timedatectl set-local-rtc 1 --adjust-system-clock
 ```
 
-Isto diz ao Linux para ajustar a forma como lê o relógio do hardware, resolvendo o conflito.
+Isto diz ao Linux para usar hora local no relógio de hardware tal como o Windows, resolvendo o conflito. Podes confirmar que a alteração foi aplicada com `timedatectl` e verificar que diz `RTC in local TZ: yes`.
+
+> ⚠️ Esta alteração pode gerar um aviso sobre potenciais problemas com mudanças de fuso horário e horário de verão. Para uso doméstico em desktop é seguro ignorar.
 
 ---
 
@@ -747,7 +747,7 @@ flatpak remotes
 Deves ver `flathub` na lista. Se não:
 
 ```bash
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
 Reinicia a sessão ou o computador.
@@ -779,4 +779,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 26 de Março 2026*
+*Última atualização: 28 de Março 2026*
