@@ -165,10 +165,12 @@ sudo dnf install intel-media-driver -y
 >⚠️ As builds padrão do Fedora têm o suporte a decodificação H.264/H.265 via VA-API removido por questões de licença. O swap abaixo substitui apenas os decoders de vídeo do Mesa (VA-API/VDPAU) pelas versões do RPM Fusion que incluem esses codecs, não estás a trocar os drivers da GPU, o amdgpu e o Mesa 3D continuam exactamente iguais. O swap é necessário porque os pacotes padrão já estão instalados e entram em conflito com os freeworld:
 
 ```bash
-sudo dnf install mesa-va-drivers-freeworld mesa-va-drivers-freeworld.i686 --allowerasing -y
+sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld --allowerasing -y
+sudo dnf swap mesa-va-drivers.i686 mesa-va-drivers-freeworld.i686 --allowerasing -y
+sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld --allowerasing -y
 ```
 
-> ⚠️ O `--allowerasing` remove automaticamente os pacotes `mesa-va-drivers` e `mesa-vdpau-drivers` padrão que conflituam com os freeworld, substituindo-os numa única transação limpa. O `mesa-vdpau-drivers-freeworld` não precisa de ser instalado separadamente — a partir da versão 25.3.6 do RPM Fusion foi fundido dentro do `mesa-va-drivers-freeworld`.
+> ⚠️ Os três comandos são executados separadamente de forma intencional. O `mesa-va-drivers-freeworld` (VA-API) e o `mesa-vdpau-drivers-freeworld` (VDPAU) são dois pacotes distintos no RPM Fusion — instalá-los no mesmo comando pode causar conflitos de versão quando o RPM Fusion os atualiza em momentos diferentes. As variantes `.i686` são necessárias para o Steam e Proton (compatibilidade 32-bit).
 
 ### 3.5 Firefox ou Google Chrome
 
@@ -262,12 +264,16 @@ A NVIDIA no Linux é historicamente complicada (felizmente no futuro irá deixar
 
 > ⚠️ **Secure Boot:** O módulo kernel da NVIDIA requer assinatura se tiveres Secure Boot ativo. É mais fácil desativá-lo na BIOS antes de instalar os drivers.
 
-> ⚠️ **Para GPUs da série RTX 5000 (Blackwell) ou mais recente**, o módulo kernel open-source é **obrigatório** pois os drivers proprietários já não suportam estas GPUs. Ativa-o **antes** de instalar o `akmod-nvidia`:
+> ⚠️ **Para GPUs da série RTX 5000 (Blackwell) ou mais recente**, o módulo kernel open-source é **obrigatório** pois os drivers proprietários já não suportam estas GPUs. O `akmod-nvidia` atual do RPM Fusion **deteta automaticamente** o hardware Blackwell e seleciona o módulo correto — não é necessário nenhum passo extra. Basta instalar normalmente:
 > ```bash
-> sudo mkdir -p /etc/rpm/macros.d/
-> echo "%_with_nvidia_open 1" | sudo tee /etc/rpm/macros.d/macros.nvidia-open
+> sudo dnf install akmod-nvidia -y
 > ```
-> Para **RTX 4000 (Ada Lovelace) e anteriores**, o `akmod-nvidia` padrão funciona perfeitamente e **não precisas** deste passo. O módulo open está disponível como opção avançada mas o RPM Fusion não o recomenda para uso geral.
+> Se por algum motivo quiseres forçar explicitamente o módulo open (método oficial RPM Fusion):
+> ```bash
+> sudo dnf install rpmfusion-nonfree-release-tainted -y
+> sudo dnf swap akmod-nvidia akmod-nvidia-open -y
+> ```
+> Para **RTX 4000 (Ada Lovelace) e anteriores**, o `akmod-nvidia` padrão funciona perfeitamente e **não precisas** de nenhum destes passos.
 
 Instala os drivers proprietários:
 
@@ -779,4 +785,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 28 de Março 2026*
+*Última atualização: 3 de Abril 2026*
