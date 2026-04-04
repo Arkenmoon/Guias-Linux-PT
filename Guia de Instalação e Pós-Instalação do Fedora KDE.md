@@ -29,10 +29,11 @@
    - 9.2 [Lutris e Heroic Games Launcher](#92-lutris-e-heroic-games-launcher)
    - 9.3 [GameMode e MangoHud](#93-gamemode-e-mangohud)
    - 9.4 [Anti-Cheat e Compatibilidade](#94-anti-cheat-e-compatibilidade)
-10. [Personalização do KDE](#10-personalização-do-kde)
-11. [Otimizações e Manutenção](#11-otimizações-e-manutenção)
-12. [Resolução de Problemas Comuns](#12-resolução-de-problemas-comuns)
-13. [Notas Finais](#13-notas-finais)
+10. [Aplicações](#10-aplicações)
+11. [Personalização do KDE](#11-personalização-do-kde)
+12. [Otimizações e Manutenção](#12-otimizações-e-manutenção)
+13. [Resolução de Problemas Comuns](#13-resolução-de-problemas-comuns)
+14. [Notas Finais](#14-notas-finais)
 
 ---
 
@@ -42,9 +43,16 @@ O **Fedora** é uma das distribuições Linux mais respeitadas, usa software rec
 
 O **KDE Plasma** é o ambiente de trabalho mais parecido com o Windows em termos de estrutura visual, tem a barra de tarefas bastante similar, menu de aplicações e gestor de ficheiros familiar. Para quem vem do Windows a curva de aprendizagem é muito mais suave do que com o GNOME, que é o que muitos preferem e que é mais parecido a macOS. Se for esse o teu caso, abordarei GNOME noutro guia a publicar no futuro.
 
-Pessoalmente, a combinação Fedora + KDE Plasma é mais sólida, moderna e personalizável, não te trata como se fosses um utilizador de testes beta como no Windows ou com o receio de alguma atualização, partir o sistema como poderá em raras ocasiões acontecer em distribuições baseadas em Arch (CachyOS, EndeavourOS, etc.). Para mim é a melhor opção no dia a dia que tanto dá para gaming como para programação, edição de vídeo/imagem/som, trabalho com documentação, navegar pela internet, etc. Na minha experiência até agora tem sido muito estável desde que o uso há quase meio ano, raramente tenho tido algum tipo de problema. Os que tenho normalmente são causados por mim próprio de andar a mexer no sistema, mas felizmente temos maneiras de voltar atrás caso se faça algum erro. A Comunidade do Fedora também é bastante amigável e no fórum deles, rapidamente respondem a questões que tenhas, mesmo que a lingua Inglesa seja uma limitação.
+Pessoalmente, a combinação Fedora + KDE Plasma é mais sólida, moderna e personalizável, não te trata como se fosses um utilizador de testes beta como no Windows ou com o receio de alguma atualizaçã. Para o meu uso pessoal é a melhor opção no dia a dia que tanto dá para gaming como para programação, edição de vídeo/imagem/som, trabalho com documentação, navegar pela internet, etc. Na minha experiência até agora tem sido muito estável desde que a uso há quase meio ano, raramente tenho tido algum tipo de problema. Os que tenho normalmente são causados por mim próprio de andar a mexer no sistema, mas felizmente temos maneiras de voltar atrás caso se faça algum erro. A Comunidade do Fedora também é bastante amigável e no fórum deles, rapidamente respondem a questões que tenhas, mesmo que a lingua Inglesa seja uma limitação.
 
-> ⚠️ Nota: Este guia cobre apenas o Fedora KDE Plasma (atualmente na versão 43 à data deste guia), uma versão com atualizações constantes e testadas antes de serem publicadas para todos. Futuramente será publicado um guia separado para as Atomic builds ou imutáveis como são conhecidas, estas são versões onde o sistema é mais resistente a erros e mais difícil de partir por estar em modo de leitura. Usam rpm-ostree no caso do Fedora Kinoite e ujust como task runner no caso do Bazzite, a distribuição mais focada em gaming. O dnf é apenas para a versão do Fedora abordada neste guia.
+
+>  Disclaimer: O guia apenas cobre o Fedora KDE Plasma que está atualmente na versão 43.
+> 
+>  Caso queiras algo mais focado no Gaming tens como opção o [Bazzite](https://github.com/Arkenmoon/Guia-Bazzite-PT) que é excelente out of the box caso queiras só jogar, é também dificil de partir o sistema pois os ficheiros cruciais estão em modo leitura dando uma margem maior de segurança.
+>
+>  O [CachyOS](https://github.com/DarKouto/guia-instalacao-linux-pt-pt) também é uma boa opção e é bastante intuitivo de utilizar hoje em dia apesar de ser baseado em Arch (distribuição na vanguarda de atualizações rápidas). O CachyHello permite instalar grande parte das Apps sem necessitar de saber usar o terminal. Têm uma comunidade super amigável que ajuda caso tenhas algum problema, seja através do Discord deles ou nos fóruns.
+>
+>  Pessoalmente, o Fedora é um óptimo equilibrio entre atualizações rápidas e estabilidade a longo prazo, mas claro esta é a minha opinião. Qualquer outra distribuição funciona, é essa a magia do Linux. 😊 
 
 ---
 
@@ -231,8 +239,6 @@ flatpak install flathub org.videolan.VLC
 
 Se fores pelo **Discover**, no canto superior direito da aplicação, mesmo ao lado de descarregar, garante sempre que estás a sacar a aplicação do **Flathub** e não do **Fedora Linux**.
 
-> Para a maioria das aplicações do dia-a-dia (browsers, clientes de Discord, gestores de password, etc.), Flatpak é a forma recomendada de instalar no Fedora para iniciantes. Caso a aplicação não esteja disponível no Flathub, aí sim compensa procurar nativamente pela mesma (ficheiro .RPM).
-
 #### Flatseal - Gerir permissões de Flatpaks
 
 As aplicações Flatpak correm em sandbox (isoladas), o que significa que por omissão podem não ter acesso a certas pastas do sistema. Se uma aplicação não consegue aceder aos teus ficheiros ou discos secundários o **Flatseal** permite gerir essas permissões de forma visual:
@@ -364,8 +370,6 @@ sudo systemctl enable --now snapper-cleanup.timer
 Esta secção foi expandida para guias individuais dedicados, onde cada tema é coberto com mais detalhe:
 
 📄 **[Setup ao NextDNS](./Setup%20ao%20NextDNS.md)** — Como configurar o NextDNS no Fedora via systemd-resolved para bloquear anúncios, rastreadores e domínios maliciosos a nível de rede.
-
-📄 **Guia Mullvad VPN** *(em breve)* — Instalação e configuração do Mullvad no Fedora, incluindo kill switch, split tunneling e protocolo WireGuard.
 
 ---
 
@@ -631,7 +635,114 @@ Mas como referi para verificar se um jogo específico funciona, consulta sempre:
 
 ---
 
-## 10. Personalização do KDE
+## 10. Aplicações
+
+### Visual Studio Code
+
+Para quem programa no seu dia a dia, recomendo a instalar o Visual Studio Code nativo no Fedora KDE que é muito mais permissivo que a versão flatpak:
+
+```
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo tee /etc/yum.repos.d/vscode.repo <<EOF
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+sudo dnf check-update && sudo dnf install code
+```
+
+As atualizações serão automáticas pois adicionamos o repositório da Microsoft.
+
+### Virt-Manager (Máquina Virtual)
+
+Caso utilizes máquinas virtuais para experimentar outras distribuições, ou até caso necessites de utilizar uma aplicação especifica do Windows, recomendo o Virt-Manager. Basta sacar os ISOs do Sistema Operativo pretendido e correr na máquina virtual!
+Podes instala-lo da seguinte forma:
+
+```
+sudo dnf install virt-manager libvirt qemu-kvm virt-install virt-viewer
+```
+Isto instala os componentes necessários.
+
+De seguida necessitamos de ativar e criar o serviço libvirt:
+
+```
+sudo systemctl enable --now libvirtd
+```
+
+Agora só temos de adicionar o teu utilizador ao grupo libvirt (para não precisares de sudo):
+```
+sudo usermod -aG libvirt $USER
+```
+Recomendo de seguida reiniciar para certificar que as definições ficam aplicadas
+```
+sudo reboot
+```
+Depois basta adicionares o ISO pretendido, criar o ambiente que necessitas e assim podes experimentar outros sistemas dentro do Fedora!
+
+
+### OBS
+
+Segundo os criadores do projeto, a melhor forma de instalar o OBS no Linux é através do Flatpak oficial mantido por eles: 
+
+```
+flatpak install flathub com.obsproject.Studio
+```
+Isto certifica que tens todos os plugins/codecs, necessários para que as gravações/streams funcionem sem qualquer constrangimentos e incompatibilidade de livrarias do sistema.
+
+### Kdenlive (editor de vídeo gratuito da KDE)
+
+Não é tão profissional ou bom como o Premiere e afins, mas este editor tem uma óptima integração com o KDE e é bastante simples de utilizar caso queiras fazer edição básica de vídeo.
+O melhor método no Fedora é através do Flatpak via Flathub, pois nativamente tem tendência a estar umas versões mais atrás. O Flatpak também é mantido pela própria KDE, isto implica que recebes os updates diretamente deles.
+
+```
+flatpak install flathub org.kde.kdenlive
+```
+
+### Audacity
+
+Tal como o Kdenlive, o audacity é uma óptima ferramenta gratuita e simples de utilizar para edição de som.
+A versão Flatpak é a melhor forma de instalar o Audacity:
+
+```
+flatpak install flathub org.audacityteam.Audacity
+```
+
+Infelizmente a versão nativa tem também tendência a ficar um pouco esquecida, sendo que o Flatpak é mantido diretamente pelos autores do Audacity.
+
+### Darktable e GIMP
+
+Para edição de imagem e fotografia, tanto o Darktable como o GIMP são excelentes opções e bastante conhecidas. 
+Têm uma pequena curva de aprendizagem, mas funcionam perfeitamente:
+
+```
+flatpak install flathub org.gimp.GIMP
+flatpak install flathub org.darktable.Darktable
+```
+
+A versão nativa tende também a ficarem com versões um pouco mais atrás, ambos estes projectos são mantidos no Flathub pelos respetivos autores.
+
+
+### LibreOffice / OnlyOffice
+
+No caso do Fedora KDE felizmente o LibreOffice já vem instalado por omissão, poderás encontra-lo da seguinte forma:
+
+Lançador de Aplicações -> Escritório -> LibreOffice
+
+Caso necessites de compatibilidade maior com Office da Microsoft, tens também o OnlyOffice como opção:
+
+```
+flatpak install flathub org.onlyoffice.desktopeditors
+```
+
+Esta é a versão oficial mantida pelos autores.
+Sinceramente para a maior parte das tarefas o LibreOffice chega bem e já vem por omissão com o Fedora.
+
+---
+
+## 11. Personalização do KDE
 
 O KDE Plasma é extremamente personalizável. Aqui ficam os pontos de partida para quem vem do Windows e quer orientar-se.
 
@@ -675,7 +786,7 @@ Isto diz ao Linux para usar hora local no relógio de hardware tal como o Window
 
 ---
 
-## 11. Otimizações e Manutenção
+## 12. Otimizações e Manutenção
 
 ### Limpeza periódica
 
@@ -704,7 +815,7 @@ Faz isto periodicamente ou sempre que atualizas o sistema. Podes também ir a Co
 
 ---
 
-## 12. Resolução de Problemas Comuns
+## 13. Resolução de Problemas Comuns
 
 Aqui ficam soluções rápidas para problemas que muitos utilizadores encontram nas primeiras semanas com o Fedora. Se tiveres um problema que não está aqui, a [Arch Wiki](https://wiki.archlinux.org/) é surpreendentemente útil mesmo para Fedora, a maioria das soluções aplicam-se a qualquer distro.
 
@@ -764,7 +875,7 @@ Verifica primeiro se o Proton está ativado (Steam > Definições > Compatibilid
 
 ---
 
-## 13. Notas Finais
+## 14. Notas Finais
 
 Este guia cobre o essencial para teres o Fedora KDE funcional e preparado para gaming. Não é exaustivo, pois o Linux tem sempre mais para explorar e está sempre em constantes mudanças, mas é um ponto de partida sólido para qualquer iniciante começar a sua jornada. 
 Tentarei manter este guia atualizado sempre que possível para colmatar as alterações que vão acontecendo, seja no Fedora ou no panorama do Gaming em geral.
