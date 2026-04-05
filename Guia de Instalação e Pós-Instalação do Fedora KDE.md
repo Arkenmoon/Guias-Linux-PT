@@ -149,7 +149,7 @@ Deves ver `rpmfusion-free` e `rpmfusion-nonfree` na lista.
 
 Sem codecs o Fedora não reproduz a maioria dos formatos de vídeo e áudio (MP3, H.264, HEVC, AAC, etc.) nativamente. Com o RPM Fusion instalado resolve-se da seguinte forma:
 
-> ⚠️ **Nota Fedora 41+:** O antigo comando `dnf group install multimedia` foi substituído por `dnf upgrade @multimedia`. Usa sempre `upgrade` (e não `install`) para grupos no Fedora moderno — garante que todos os pacotes do grupo são instalados **e** atualizados, incluindo os do RPM Fusion.
+> ⚠️ **Nota:** Usa sempre `upgrade` em vez de `install` para grupos de pacotes garante que os pacotes do RPM Fusion são incluídos e atualizados também. O `dnf group install multimedia` por vezes não os apanha todos.
 
 Primeiro troca o `ffmpeg-free` limitado pelo `ffmpeg` completo do RPM Fusion:
 
@@ -178,7 +178,7 @@ sudo dnf swap mesa-va-drivers.i686 mesa-va-drivers-freeworld.i686 --allowerasing
 sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld --allowerasing -y
 ```
 
-> ⚠️ Os três comandos são executados separadamente de forma intencional. O `mesa-va-drivers-freeworld` (VA-API) e o `mesa-vdpau-drivers-freeworld` (VDPAU) são dois pacotes distintos no RPM Fusion — instalá-los no mesmo comando pode causar conflitos de versão quando o RPM Fusion os atualiza em momentos diferentes. As variantes `.i686` são necessárias para o Steam e Proton (compatibilidade 32-bit).
+> ⚠️ Corre os três separadamente de propósito. O VA-API e o VDPAU são pacotes distintos no RPM Fusion e metê-los no mesmo comando pode gerar conflitos quando são atualizados em alturas diferentes. O `.i686` é necessário para o Steam e Proton funcionarem em 32-bit.
 
 ### 3.5 Firefox ou Google Chrome
 
@@ -270,15 +270,13 @@ A NVIDIA no Linux é historicamente complicada (felizmente no futuro irá deixar
 
 > ⚠️ **Secure Boot:** O módulo kernel da NVIDIA requer assinatura se tiveres Secure Boot ativo. É mais fácil desativá-lo na BIOS antes de instalar os drivers.
 
-> ⚠️ **Para GPUs da série RTX 5000 (Blackwell) ou mais recente**, o módulo kernel open-source é **obrigatório** pois os drivers proprietários já não suportam estas GPUs. O `akmod-nvidia` atual do RPM Fusion **deteta automaticamente** o hardware Blackwell e seleciona o módulo correto — não é necessário nenhum passo extra. Basta instalar normalmente:
-> ```bash
-> sudo dnf install akmod-nvidia -y
-> ```
-> Se por algum motivo quiseres forçar explicitamente o módulo open (método oficial RPM Fusion):
+> ⚠️ **Para GPUs da série RTX 5000 (Blackwell) ou mais recente**, o módulo kernel open-source é **obrigatório** pois os drivers proprietários já não suportam estas GPUs. Tens de instalar explicitamente o `akmod-nvidia-open` (método oficial RPM Fusion):
 > ```bash
 > sudo dnf install rpmfusion-nonfree-release-tainted -y
-> sudo dnf swap akmod-nvidia akmod-nvidia-open -y
+> sudo dnf install akmod-nvidia-open -y
 > ```
+> Não uses o `akmod-nvidia` normal com Blackwell, pode acabar por compilar o driver proprietário que não funciona nesta arquitetura.
+>
 > Para **RTX 4000 (Ada Lovelace) e anteriores**, o `akmod-nvidia` padrão funciona perfeitamente e **não precisas** de nenhum destes passos.
 
 Instala os drivers proprietários:
@@ -422,8 +420,10 @@ Para a maioria dos teclados incluindo mecânicos como por exemplo Ducky ou Keytr
 Se precisas de funcionalidades avançadas de remapeamento, o [**Input Remapper**](https://github.com/sezanzeb/input-remapper) é uma boa opção:
 
 ```bash
-flatpak install flathub io.github.sezanzeb.input_remapper
+sudo dnf install input-remapper -y
 ```
+
+> ⚠️ O Input Remapper precisa de acesso direto ao kernel para funcionar, o que é incompatível com a sandbox do Flatpak, por isso não existe versão Flathub. Via DNF é o método correto.
 
 ### DACs e áudio USB externo
 
@@ -468,7 +468,7 @@ Reinicia o PipeWire após instalar:
 systemctl --user restart pipewire wireplumber
 ```
 
-> O `libfreeaptx` ativa aptX/aptX HD, o `libldac` ativa LDAC (codec Sony de alta resolução) e o `fdk-aac` melhora suporte AAC. O codec disponível depende do teu headphone, o PipeWire resolve automaticamente o que é suportado por ambos os lados.
+> O `libfreeaptx` ativa aptX/aptX HD, o `libldac` ativa LDAC (codec Sony de alta resolução) e o `fdk-aac` melhora o suporte AAC. Os três precisam do RPM Fusion ([secção 3.3](#33-rpm-fusion--repositórios-adicionais)) para instalar. O codec usado depende do teu headphone, o PipeWire trata automaticamente de negociar o melhor suportado por ambos os lados.
 
 ### Fontes — Compatibilidade com documentos
 
@@ -896,4 +896,4 @@ Obrigado pela tua leitura 🙂
 | [r/Fedora](https://www.reddit.com/r/Fedora/) | Comunidade do Fedora no Reddit |
 | [Flathub](https://flathub.org/) | Catálogo de aplicações Flatpak |
 
-*Última atualização: 3 de Abril 2026*
+*Última atualização: 4 de Abril 2026*
